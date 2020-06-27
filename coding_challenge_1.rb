@@ -13,14 +13,14 @@ jim_dice=*(1..7)
 jill_dice=*(1..4)
 
 
-jim_possibilities = jim_dice.repeated_permutation(4).to_a
+jim_possibilities = jim_dice.repeated_permutation(4).map(&:sum).to_a
 
-jill_possibilities = jill_dice.repeated_permutation(7).to_a
+jill_possibilities = jill_dice.repeated_permutation(7).map(&:sum).to_a
 
 jim_vs_jill = []
 jim_possibilities.each do |jim|
   jill_possibilities.each do |jill|
-    jim_vs_jill << (jim.inject(0, :+) > jill.inject(0, :+))
+    jim_vs_jill << (jim > jill)
   end
 end
 
