@@ -12,40 +12,19 @@ jill_possibilities = []
 jim_dice=*(1..7)
 jill_dice=*(1..4)
 
-jim_dice.each do |a|
-  jim_dice.each do |b|
-    jim_dice.each do |c|
-      jim_dice.each do |d|
-        jim_possibilities << [a,b,c,d].sum
-      end
-    end
-  end
-end
 
-jill_dice.each do |a|
-  jill_dice.each do |b|
-    jill_dice.each do |c|
-      jill_dice.each do |d|
-        jill_dice.each do |e|
-          jill_dice.each do |f|
-            jill_dice.each do |g|
-              jill_possibilities << [a,b,c,d,e,f,g].sum
-            end
-          end
-        end
-      end
-    end
-  end
-end
+jim_possibilities = jim_dice.repeated_permutation(4).to_a
+
+jill_possibilities = jill_dice.repeated_permutation(7).to_a
 
 jim_vs_jill = []
 jim_possibilities.each do |jim|
   jill_possibilities.each do |jill|
-    jim_vs_jill << (jim > jill)
+    jim_vs_jill << (jim.inject(0, :+) > jill.inject(0, :+))
   end
 end
 
+results = Hash[jim_vs_jill.group_by(&:itself).map {|k,v| [k, v.size] }]
 total_games = jim_vs_jill.count
-results = jim_vs_jill.group_by(&:itself).map { |k,v| [k, v.count] }.to_h
 
 p results[true].fdiv(total_games).round(7)
