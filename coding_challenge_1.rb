@@ -28,3 +28,13 @@ results = Hash[jim_vs_jill.group_by(&:itself).map {|k,v| [k, v.size] }]
 total_games = jim_vs_jill.count
 
 p results[true].fdiv(total_games).round(7)
+
+# jim_win = 0
+# jill_win_or_draw = 0
+# jim_possibilities.each do |jim|
+#   jill_possibilities.each do |jill|
+#     (jim > jill) ? jim_win += 1 : jill_win_or_draw += 1
+#   end
+# end
+#
+# p jim_win.fdiv(jim_win + jill_win_or_draw).round(7)
