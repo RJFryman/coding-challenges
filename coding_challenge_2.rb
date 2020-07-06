@@ -9,9 +9,16 @@
 #
 # consecutive_combo([44, 46], [45]) ➞ True
 
-def consecutive_combo(first_array, second_array)
-  full_array = first_array.concat second_array
+def consecutive_combo(*arrays)
+  full_array = []
+  arrays.each { |array| full_array.concat array }
   full_array.sort!
+  occurrences = Hash.new(0)
+  full_array.each { |number| occurrences[number] += 1 }
+  occurrences.each do |number|
+    full_array.reject! {|x| x == number[0] } if number[1].even?
+  end
+  full_array.uniq!.sort!
   return full_array == (full_array.first..full_array.last).to_a
 end
 
